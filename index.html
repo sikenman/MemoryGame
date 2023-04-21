@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Memory Game</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🌍</text></svg>">
+
+    <script type="text/javascript">
+        function restartGame() {
+            location.reload(true);
+        }
+
+        function closeDialog() {
+            document.getElementById("popup-dlg").remove("showme");
+            // show the [Restart] game block & hide [Status] block
+            document.getElementById("status-block").style.display = "none";
+            document.getElementById("restart-block").style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+    <h1 id="game-level">Memory Game</h1>
+    <section class="grid-container">
+        <div class="grid-card" data-id="0"></div>
+        <div class="grid-card" data-id="1"></div>
+        <div class="grid-card" data-id="2"></div>
+        <div class="grid-card" data-id="3"></div>
+        <div class="grid-card" data-id="4"></div>
+        <div class="grid-card" data-id="5"></div>
+        <div class="grid-card" data-id="6"></div>
+        <div class="grid-card" data-id="7"></div>
+        <div class="grid-card" data-id="8"></div>
+        <div class="grid-card" data-id="9"></div>
+    </section>
+
+    <!-- Game Status Section » begins -->
+    <footer class="status">
+        <div id="status-block">
+            Matched: <span id="match">0</span> Moves: <span id="moves">0</span> Time: <span id="timer">0:00</span>
+        </div>
+        <div id="restart-block">
+            <button class="game-restart" onclick="restartGame();">Restart Game</button>
+        </div>
+    </footer>
+    <!-- Game Status Section » ends -->
+
+    <!-- Game Over modal dialog box » begins -->
+    <div id="popup-dlg" class="overlay">
+        <div class="popup">
+            <h2>Game Over</h2>
+            <a class="close" href="#" onclick="closeDialog();">&times;</a>
+            <div class="content">
+                <p>🎉 Congratulations! You won the Game.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Game Over modal dialog box » ends -->
+
+    <script type="module" src="./js/game.js"></script>
+</body>
+
+</html>

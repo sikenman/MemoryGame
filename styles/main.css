@@ -1,0 +1,205 @@
+:root {
+  --card-cols: 4;
+  --card-rows: 5;
+  --card-divisior: 6.2;
+  --card-color: lightskyblue;
+  --status-text-color: steelblue;
+  --shadow-color: #999;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  /* prevent text selection */
+  -webkit-user-select: none; /* for Safari */
+  user-select: none;
+  background-color: lightyellow;
+  border-bottom: 0px dotted orangered;
+  min-width: 480px;
+}
+
+h1 {
+  color: #22212c;
+  font-size: 3.4rem;
+  line-height: 3.8rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px var(--shadow-color);
+}
+
+.grid-container {
+  margin-top: 0;
+  margin-left: 20%;
+  margin-right: 20%;
+
+  display: grid;
+  grid-template-columns: repeat(var(--card-cols), 1fr);
+  grid-template-rows: repeat(var(--card-rows), 1fr);
+  gap: 0.5rem;
+  border: 0px dotted silver;
+}
+
+@media screen and (max-width: 1600px) {
+  .grid-container {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .grid-container {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  h1 {
+    color: #22212c;
+    font-size: 3rem;
+    line-height: 3.4rem;
+  }
+}
+
+.grid-card {
+  cursor: pointer;
+  font-size: 5.3rem;
+  border-radius: 1rem;
+  min-width: 8rem;
+  min-height: 8rem;
+  background-color: #ddd;
+  border: 2px solid #d6d6d6;
+  height: calc(100vh / var(--card-divisior));
+
+  /* show emoji at the center */
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card flip animation */
+.grid-card.show-animation {
+  transition: transform 0.5s ease;
+}
+
+.grid-card.clicked {
+  border-color: var(--card-color);
+  background-color: var(--card-color);
+}
+
+.grid-card.clicked.show-animation {
+  transform: rotateY(180deg);
+}
+
+.grid-card.clicked-last {
+  background-color: lightslategray;
+}
+.grid-card.clicked-last.show-animation {
+  transform: rotateY(0deg);
+}
+
+.grid-card.matched {
+  border: 2px solid var(--status-text-color);
+}
+.grid-card.matched.show-animation {
+  transform: rotateY(0deg);
+}
+
+footer.status {
+  color: black;
+  padding: 0.5rem;
+  font-size: 2rem;
+  line-height: 2.2rem;
+  text-align: center;
+  text-shadow: 1px 1px 2px var(--shadow-color);
+}
+
+#status-block {
+  padding: 0.5rem;
+}
+
+#match,
+#moves {
+  color: var(--status-text-color);
+  font-weight: normal;
+}
+
+#timer {
+  color: darkgoldenrod;
+}
+
+#status-block {
+  display: block;
+}
+
+/* hidden at load */
+#restart-block {
+  display: none;
+}
+
+/* Reload Buttons */
+button.game-restart {
+  font-size: 1.4rem;
+  width: 14rem;
+  height: 3.6rem;
+  padding: 0.3rem;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+/* Pop-up dialog box */
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay.showme {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 40vh auto;
+  padding: 16px;
+  background: #fff;
+  border-radius: 1.5rem;
+  width: 40%;
+  position: relative;
+  transition: all 4s ease-in-out;
+}
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  color: var(--status-text-color);
+  font-size: 1.75rem;
+}
+.popup .close {
+  position: absolute;
+  top: 0.3rem;
+  right: 1rem;
+  transition: all 300ms;
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: var(--card-color);
+}
+.popup .content {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  text-align: center;
+  overflow: auto;
+}
+@media screen and (max-width: 768px) {
+  .popup {
+    width: 70%;
+    transition: all 3s ease-in-out;
+  }
+}
