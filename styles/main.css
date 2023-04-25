@@ -30,8 +30,10 @@ h1 {
 
 .grid-container {
   margin-top: 0;
-  margin-left: 20%;
-  margin-right: 20%;
+  /* following margin left/right will be applied if
+  viewport width is between (980 px and 1439px) */
+  margin-left: 10%;
+  margin-right: 10%;
 
   display: grid;
   grid-template-columns: repeat(var(--card-cols), 1fr);
@@ -40,14 +42,7 @@ h1 {
   border: 0px dotted silver;
 }
 
-@media screen and (max-width: 1600px) {
-  .grid-container {
-    margin-left: 10%;
-    margin-right: 10%;
-  }
-}
-
-@media screen and (max-width: 1024px) {
+@media (width < 980px) {
   .grid-container {
     margin-left: 4%;
     margin-right: 4%;
@@ -56,6 +51,13 @@ h1 {
     color: #22212c;
     font-size: 3rem;
     line-height: 3.4rem;
+  }
+}
+
+@media (width > 1439px) {
+  .grid-container {
+    margin-left: 24%;
+    margin-right: 24%;
   }
 }
 
@@ -197,7 +199,8 @@ button.game-restart {
   text-align: center;
   overflow: auto;
 }
-@media screen and (max-width: 768px) {
+
+@media (width < 768px) {
   .popup {
     width: 70%;
     transition: all 3s ease-in-out;

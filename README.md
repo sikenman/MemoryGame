@@ -5,14 +5,16 @@ I have made this game using some of the useful and latest features of ECMAScript
 ## Features of MemoryGame
 - Classic memory game of levels 4 × 4 and 4 × 5.
   - Make use of a 2D array to load the games.
+  - Once game is over, user can start either of the two possible games.
 - Two sets of emojis are available at each level.
   - Set of flags emojis.
   - Set of miscellaneous emojis.
 - Random sets of emojis are selected at runtime.
 - Different color schemes for each game level.
 - Animation of cards when clicking on them.
-  - CSS animation toggle based on [showAnimation] boolean variable.
+  - CSS animation toggle based on **showAnimation** boolean variable.
 - The game over modal dialog box is shown when the user completes the game.
+- The game level saved using **window.sessionStorage**.
 - Emoji (🌍) is used as favicon.
 
 ## JavaScript features used
@@ -20,26 +22,23 @@ I have made this game using some of the useful and latest features of ECMAScript
   - [Fisher–Yates Shuffle](https://bost.ocks.org/mike/shuffle/)
 - Changing CSS variables through JavaScript.
 - Make use of export and import modules with JS files.
+- Implemented Module pattern in the game.
 - Implemented (Immediately Invoked Function Expressions).
 - Context menu on the right click is disabled (via JavaScript).
 
 ## CSS features used
 - CSS variables were used.
 - Selection of text is disabled (via CSS).
+- Used Media Queries Level 4.
 - Responsive grid design that adjusts to different screen sizes.
   - CSS media queries for responsive design.
 
 ### Sample CSS code used
 ```css
-@media screen and (max-width: 1024px) {
+@media (width > 1439px) {
   .grid-container {
-    margin-left: 4%;
-    margin-right: 4%;
-  }
-  h1 {
-    color: #22212c;
-    font-size: 3rem;
-    line-height: 3.4rem;
+    margin-left: 24%;
+    margin-right: 24%;
   }
 }
 
@@ -59,6 +58,7 @@ I have made this game using some of the useful and latest features of ECMAScript
   align-items: center;
   justify-content: center;
 }
+
 ```
 ### Sample JavaScript code used
 ```javascript

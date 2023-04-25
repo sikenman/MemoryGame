@@ -5,22 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Memory Game</title>
     <link rel="stylesheet" type="text/css" href="styles/main.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🌍</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🌍</text></svg>">
 
-    <script type="text/javascript">
-        function restartGame() {
-            location.reload(true);
-        }
-
-        function closeDialog() {
-            document.getElementById("popup-dlg").remove("showme");
-            // show the [Restart] game block & hide [Status] block
-            document.getElementById("status-block").style.display = "none";
-            document.getElementById("restart-block").style.display = "block";
-        }
     </script>
 </head>
 
@@ -45,7 +35,8 @@
             Matched: <span id="match">0</span> Moves: <span id="moves">0</span> Time: <span id="timer">0:00</span>
         </div>
         <div id="restart-block">
-            <button class="game-restart" onclick="restartGame();">Restart Game</button>
+            <button class="game-restart" onclick="App.startGame('4x4');">Game 4 &times; 4</button>
+            <button class="game-restart" onclick="App.startGame('4x5');">Game 4 &times; 5</button>
         </div>
     </footer>
     <!-- Game Status Section » ends -->
@@ -54,7 +45,7 @@
     <div id="popup-dlg" class="overlay">
         <div class="popup">
             <h2>Game Over</h2>
-            <a class="close" href="#" onclick="closeDialog();">&times;</a>
+            <a class="close" href="#" onclick="App.closeDialog();">&times;</a>
             <div class="content">
                 <p>🎉 Congratulations! You won the Game.</p>
             </div>
@@ -63,6 +54,35 @@
     <!-- Game Over modal dialog box » ends -->
 
     <script type="module" src="./js/game.js"></script>
+    <script>
+        // Start the Game
+        const App = (function () {
+            // private
+            const about = "2D Memory Game";
+            const author = "Siken M. Dongol";
+            const modified = "Apr 25, 2023";
+
+            // public
+            return {
+                about,
+                author,
+                modified,
+                startGame: (level) => {
+                    // set the localStorage [gameLevel]
+                    window.sessionStorage.setItem("gameLevel", level);
+                    location.reload(true);
+                },
+                closeDialog: () => {
+                    document.getElementById("popup-dlg").remove("showme");
+                    // show the [Restart] game block & hide [Status] block
+                    document.getElementById("status-block").style.display = "none";
+                    document.getElementById("restart-block").style.display = "block";
+                },
+            };
+        })();
+        console.log(App.about);
+
+    </script>
 </body>
 
 </html>

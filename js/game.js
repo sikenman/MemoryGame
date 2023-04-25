@@ -1,79 +1,122 @@
 import * as Game from "./const.js";
 import { getEmojis, setLevelColor } from "./level.js";
 
-/* Important parameters to start the game begins */
+/* Important parameters of the game begins */
 let appTimer = null;
-let showAnimation = true;
-
-// start the game at this level
 let gameLevel = null;
-gameLevel = Game.LEVEL_4_X_4;
-gameLevel = Game.LEVEL_4_X_5;
+let showAnimation = false;
 /* Important parameters ends */
 
-function gameOver() {
-  // stop the timer
-  clearInterval(appTimer);
+const MemoryGame = (function () {
+  // private
+  const about = "2D Memory Game core code";
+  const author = "Siken M. Dongol";
+  const modified = "Apr 25, 2023";
 
-  // show [You Won] modal dialog
-  document.getElementById("popup-dlg").classList.add("showme");
-}
+  // public
+  return {
+    about,
+    author,
+    modified,
+    getGameLevel: () => {
+      // start the game at this level
+      gameLevel = window.sessionStorage.getItem("gameLevel");
 
-// game initialization section
-(function () {
-  console.log(gameLevel + " game begins!!");
+      if (gameLevel === null || gameLevel === undefined) {
+        gameLevel = Game.LEVEL_4_X_4;
+      }
+    },
 
-  // disable right click
-  document.addEventListener("contextmenu", (event) => {
-    event.preventDefault();
-  });
+    // game initialization
+    initGame: () => {
+      appTimer = null;
+      console.log(gameLevel + " game begins!!");
 
-  let gameTitle = null;
-  let [cols, rows, cardDivisor] = [4, 4, 5];
+      // disable right click
+      document.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+      });
 
-  switch (gameLevel) {
-    case Game.LEVEL_4_X_4:
-      gameTitle = "4 × 4 Game";
-      [cols, rows, cardDivisor] = [4, 4, 5];
-      break;
-    case Game.LEVEL_4_X_5:
-      gameTitle = "4 × 5 Game";
-      [cols, rows, cardDivisor] = [4, 5, 6.2];
-      break;
-  }
+      let gameTitle = null;
+      let [cols, rows, cardDivisor] = [4, 4, 5];
 
-  // change the game title and heading (h1)
-  document.title = "Memory " + gameTitle;
-  document.getElementById("game-level").innerHTML = "Memory " + gameTitle;
+      switch (gameLevel) {
+        case Game.LEVEL_4_X_4:
+          gameTitle = "4 × 4 Game";
+          [cols, rows, cardDivisor] = [4, 4, 5];
+          break;
+        case Game.LEVEL_4_X_5:
+          gameTitle = "4 × 5 Game";
+          [cols, rows, cardDivisor] = [4, 5, 6.2];
+          break;
+      }
 
-  // we already have 10 divs in HTML page
-  // we dynamically generate remaining divs for game 4x4, 4x5
-  let parentDiv = document.querySelector(".grid-container");
+      // change the game title and heading (h1)
+      document.title = "Memory " + gameTitle;
+      document.getElementById("game-level").innerHTML = "Memory " + gameTitle;
 
-  for (let i = 10; i < rows * cols; i++) {
-    let newDiv = document.createElement("div");
-    newDiv.classList.add("grid-card");
-    newDiv.dataset.id = i;
-    parentDiv.appendChild(newDiv);
-  }
+      // we already have 10 divs in HTML page
+      // we dynamically generate remaining divs for game 4x4, 4x5
+      let parentDiv = document.querySelector(".grid-container");
 
-  // changing the value of CSS variables
-  let r = document.querySelector(":root");
-  r.style.setProperty("--card-cols", cols);
-  r.style.setProperty("--card-rows", rows);
-  r.style.setProperty("--card-divisior", cardDivisor);
+      for (let i = 10; i < rows * cols; i++) {
+        let newDiv = document.createElement("div");
+        newDiv.classList.add("grid-card");
+        newDiv.dataset.id = i;
+        parentDiv.appendChild(newDiv);
+      }
 
-  // change card color when level changes
-  setLevelColor(gameLevel);
+      // changing the value of CSS variables
+      let r = document.querySelector(":root");
+      r.style.setProperty("--card-cols", cols);
+      r.style.setProperty("--card-rows", rows);
+      r.style.setProperty("--card-divisior", cardDivisor);
 
-  // show animation during card click
-  if (showAnimation === true) {
-    const gridItems = document.querySelectorAll(".grid-card");
-    gridItems.forEach((item) => {
-      item.classList.add("show-animation");
-    });
-  }
+      // change card color when level changes
+      setLevelColor(gameLevel);
+
+      // show animation during card click
+      if (showAnimation === true) {
+        const gridItems = document.querySelectorAll(".grid-card");
+        gridItems.forEach((item) => {
+          item.classList.add("show-animation");
+        });
+      }
+    },
+    gameOver: () => {
+      // stop the timer
+      clearInterval(appTimer);
+
+      // show [You Won] modal dialog
+      document.getElementById("popup-dlg").classList.add("showme");
+    },
+
+    // Timer block of the JavaScript
+    startTimer: () => {
+      /* 
+      This JS block handles displaying the timer on the screen in 0:00 (m:ss) format
+      this timer is called after every 1 second.
+      */
+      let [seconds, minutes] = [0, 0];
+
+      appTimer = setInterval(() => {
+        seconds++;
+        if (seconds === 60) {
+          minutes++;
+          seconds = 0;
+        }
+        let mm = `${String(minutes).padStart(1, "0")}`;
+        let ss = `${String(seconds).padStart(2, "0")}`;
+        document.getElementById("timer").innerHTML = `${mm}:${ss}`;
+      }, 1000);
+    },
+  };
 })();
+
+// Start the Game
+MemoryGame.getGameLevel();
+MemoryGame.initGame();
+MemoryGame.startTimer();
 
 (function () {
   /* 
@@ -131,7 +174,7 @@ function gameOver() {
         count = 0;
 
         /* GAME OVER for all other games */
-        if (gameScore == Number(pairs.length / 2)) gameOver();
+        if (gameScore == Number(pairs.length / 2)) MemoryGame.gameOver();
       } else {
         setTimeout(() => {
           firstClick.textContent = "";
@@ -147,26 +190,4 @@ function gameOver() {
       }
     }
   }
-})();
-
-// Timer block of the JavaScript
-(function () {
-  /* 
-    This JS block handles displaying the timer on the screen in 0:00 (m:ss) format
-    this timer is called after every 1 second.
-    @Author: Siken Man Dongol
-    @Date  : April 20, 2023
-*/
-  let [seconds, minutes] = [0, 0];
-
-  appTimer = setInterval(() => {
-    seconds++;
-    if (seconds === 60) {
-      minutes++;
-      seconds = 0;
-    }
-    let mm = `${String(minutes).padStart(1, "0")}`;
-    let ss = `${String(seconds).padStart(2, "0")}`;
-    document.getElementById("timer").innerHTML = `${mm}:${ss}`;
-  }, 1000);
 })();
