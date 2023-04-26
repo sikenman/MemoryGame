@@ -6,7 +6,7 @@ import { getRandom, shuffleArray } from "./lib.js";
   after shuffling for given level
 
   @Author: Siken Man Dongol
-  @Date  : April 20, 2023
+  @Date  : April 20 - 26, 2023
 */
 
 export function getEmojis(level) {
@@ -21,10 +21,11 @@ export function getEmojis(level) {
 function getEmojis4x4() {
   const emoji44 = [
     ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🏀"],
+    ["c(1)", "c(2)", "c(3)", "c(4)", "c(5)", "c(6)", "c(7)", "c(8)"],
     ["🇱🇰", "🇫🇷", "🇨🇳", "🇳🇵", "🇰🇷", "🇺🇸", "🇧🇷", "🇵🇰"],
   ];
 
-  const rndIndex = getRandom(2);
+  const rndIndex = getRandom(3);
   // making emoji pair (8+8 = 16)
   const emojis = [...emoji44[rndIndex], ...emoji44[rndIndex]];
 
@@ -35,10 +36,11 @@ function getEmojis4x4() {
 function getEmojis4x5() {
   const emoji45 = [
     ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🏀", "⭐", "❤️"],
+    ["c(1)", "c(2)", "c(3)", "c(4)", "c(5)", "c(6)", "c(7)", "c(8)", "c(9)", "c(a)"],
     ["🇱🇰", "🇫🇷", "🇨🇳", "🇳🇵", "🇰🇷", "🇺🇸", "🇧🇷", "🇵🇰", "🇮🇳", "🇵🇹"],
   ];
 
-  const rndIndex = getRandom(2);
+  const rndIndex = getRandom(3);
   // making emoji pair (10+10 = 20)
   const emojis = [...emoji45[rndIndex], ...emoji45[rndIndex]];
 

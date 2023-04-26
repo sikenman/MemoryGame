@@ -9,12 +9,14 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Two sets of emojis are available at each level.
   - Set of flags emojis.
   - Set of miscellaneous emojis.
+- One set of celebs pictures are available at each level.
+  - Loading of celebs images (300 x 300).
 - Random sets of emojis are selected at runtime.
 - Different color schemes for each game level.
 - Animation of cards when clicking on them.
-  - CSS animation toggle based on **showAnimation** boolean variable.
+  - CSS animation toggle based on **_showAnimation_** boolean variable.
 - The game over modal dialog box is shown when the user completes the game.
-- The game level saved using **window.sessionStorage**.
+- The game level saved using **_window.sessionStorage_**.
 - Emoji (🌍) is used as favicon.
 
 ## JavaScript features used
@@ -27,6 +29,7 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Implemented (Immediately Invoked Function Expressions).
 - Context menu on the right click is disabled (via JavaScript).
 - Make use of nullish coalescing operator or double question mark (??).
+- Make use of (match) function to distinguish between emoji and pictures.
 
 ## CSS features used
 - CSS variables were used.

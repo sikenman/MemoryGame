@@ -4,17 +4,20 @@ import { getEmojis } from "./level.js";
 /* 
   This is main code for memory game (4x4 and 4x5)
   @Author: Siken Man Dongol
-  @Date  : April 20 - 25, 2023
+  @Date  : April 20 - 26, 2023
 */
 const MemoryGame = (function () {
   // private variables
   let appTimer = null;
   let _gameLevel = null;
+  let _gameMode = Game.MODE_EMOJI;
+
+  let _cardPairs = [];
   let _cardAnimation = false;
 
   const about = "2D Memory Game Core";
   const author = "Siken M. Dongol";
-  const modified = "Apr 25, 2023";
+  const modified = "Apr 26, 2023";
 
   // public methods
   return {
@@ -32,11 +35,25 @@ const MemoryGame = (function () {
       return _gameLevel;
     },
 
+    set gameMode(mode) {
+      _gameMode = mode ?? Game.MODE_EMOJI;
+    },
+    get gameMode() {
+      return _gameMode;
+    },
+
     set cardAnimation(value) {
       _cardAnimation = value ?? false;
     },
     get cardAnimation() {
       return _cardAnimation;
+    },
+
+    set cardPairs(value) {
+      _cardPairs = value;
+    },
+    get cardPairs() {
+      return _cardPairs;
     },
 
     // game initialization
@@ -49,16 +66,16 @@ const MemoryGame = (function () {
       });
 
       let gameTitle = null;
-      let [cols, rows, cardDivisor] = [4, 4, 5];
+      let [cols, rows, cardDivisor] = [4, 4, 5.6];
 
       switch (MemoryGame.gameLevel) {
         case Game.LEVEL_4_X_4:
           gameTitle = "4 × 4 Game";
-          [cols, rows, cardDivisor] = [4, 4, 5];
+          [cols, rows, cardDivisor] = [4, 4, 5.6];
           break;
         case Game.LEVEL_4_X_5:
           gameTitle = "4 × 5 Game";
-          [cols, rows, cardDivisor] = [4, 5, 6.2];
+          [cols, rows, cardDivisor] = [4, 5, 6.4];
           break;
       }
 
@@ -66,11 +83,11 @@ const MemoryGame = (function () {
       document.title = "Memory " + gameTitle;
       document.getElementById("game-level").innerHTML = "Memory " + gameTitle;
 
-      // we already have 10 divs in HTML page
+      // we already have 8 divs in HTML page
       // we dynamically generate remaining divs for game 4x4, 4x5
       let parentDiv = document.querySelector(".grid-container");
 
-      for (let i = 10; i < rows * cols; i++) {
+      for (let i = 8; i < rows * cols; i++) {
         let newDiv = document.createElement("div");
         newDiv.classList.add("grid-card");
         newDiv.dataset.id = i;
@@ -114,6 +131,12 @@ const MemoryGame = (function () {
       // change the card color
       r.style.setProperty("--card-color", cardColor);
       r.style.setProperty("--status-text-color", textColor);
+
+      // use dark colors if game mode is in picture mode
+      if (MemoryGame.gameMode === Game.MODE_PICTURE) {
+        r.style.setProperty("--card-color", "#515151");
+        r.style.setProperty("--status-text-color", "#333");
+      }
     },
 
     // Game Over
@@ -150,15 +173,19 @@ const MemoryGame = (function () {
 {
   MemoryGame.cardAnimation = false;
   MemoryGame.gameLevel = Game.LEVEL_4_X_4;
+  MemoryGame.cardPairs = getEmojis(MemoryGame.gameLevel);
+  console.log(MemoryGame.cardPairs);
+
+  let checkEmoji = MemoryGame.cardPairs[0];
+  if (checkEmoji.match(/c\([1-9a]\)/)) {
+    MemoryGame.gameMode = Game.MODE_PICTURE;
+  }
   MemoryGame.initGame();
   MemoryGame.startTimer();
 }
 
 (function () {
   let [count, gameScore, gameMoves] = [0, 0, 0];
-
-  const pairs = getEmojis(MemoryGame.gameLevel);
-  console.log(pairs);
 
   let [firstClick, secondClick] = [null, null];
   let [firstEmoji, secondEmoji] = [null, null];
@@ -177,15 +204,26 @@ const MemoryGame = (function () {
     //console.info(count, gameScore, gameMoves);
 
     if (count === 0) {
-      firstEmoji = pairs[this.dataset.id];
-      e.target.textContent = firstEmoji;
+      firstEmoji = MemoryGame.cardPairs[this.dataset.id];
+
+      // our images are saved as c(x).jpg, using regular expression to match it
+      if (firstEmoji.match(/c\([1-9a]\)/)) {
+        e.target.innerHTML = `<img src="./celebs/${firstEmoji}.jpg" />`;
+      } else {
+        e.target.textContent = firstEmoji;
+      }
       //----
       firstClick = this;
       firstClick.classList.add("clicked");
       count++;
     } else if (count === 1) {
-      secondEmoji = pairs[this.dataset.id];
-      e.target.textContent = secondEmoji;
+      secondEmoji = MemoryGame.cardPairs[this.dataset.id];
+
+      if (secondEmoji.match(/c\([1-9a]\)/)) {
+        e.target.innerHTML = `<img src="./celebs/${secondEmoji}.jpg" />`;
+      } else {
+        e.target.textContent = secondEmoji;
+      }
       //----
       secondClick = this;
       secondClick.classList.add("clicked");
@@ -203,8 +241,8 @@ const MemoryGame = (function () {
         secondClick = null;
         count = 0;
 
-        /* GAME OVER for all other games */
-        if (gameScore == Number(pairs.length / 2)) MemoryGame.gameOver();
+        /* GAME OVER */
+        if (gameScore == Number(MemoryGame.cardPairs.length / 2)) MemoryGame.gameOver();
       } else {
         setTimeout(() => {
           firstClick.textContent = "";
