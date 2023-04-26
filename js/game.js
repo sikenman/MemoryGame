@@ -1,36 +1,47 @@
 import * as Game from "./const.js";
-import { getEmojis, setLevelColor } from "./level.js";
+import { getEmojis } from "./level.js";
 
-/* Important parameters of the game begins */
-let appTimer = null;
-let gameLevel = null;
-let showAnimation = false;
-/* Important parameters ends */
-
+/* 
+  This is main code for memory game (4x4 and 4x5)
+  @Author: Siken Man Dongol
+  @Date  : April 20 - 25, 2023
+*/
 const MemoryGame = (function () {
-  // private
-  const about = "2D Memory Game core code";
+  // private variables
+  let appTimer = null;
+  let _gameLevel = null;
+  let _cardAnimation = false;
+
+  const about = "2D Memory Game Core";
   const author = "Siken M. Dongol";
   const modified = "Apr 25, 2023";
 
-  // public
+  // public methods
   return {
     about,
     author,
     modified,
-    getGameLevel: () => {
-      // start the game at this level
-      gameLevel = window.sessionStorage.getItem("gameLevel");
+    appTimer,
+    set gameLevel(level) {
+      let sessionLevel = window.sessionStorage.getItem("gameLevel");
+      // start the game at session level
+      // (if not found, start game at the level provided by the user)
+      _gameLevel = sessionLevel ?? level;
+    },
+    get gameLevel() {
+      return _gameLevel;
+    },
 
-      if (gameLevel === null || gameLevel === undefined) {
-        gameLevel = Game.LEVEL_4_X_4;
-      }
+    set cardAnimation(value) {
+      _cardAnimation = value ?? false;
+    },
+    get cardAnimation() {
+      return _cardAnimation;
     },
 
     // game initialization
     initGame: () => {
-      appTimer = null;
-      console.log(gameLevel + " game begins!!");
+      console.table([MemoryGame.about, MemoryGame.gameLevel, MemoryGame.cardAnimation]);
 
       // disable right click
       document.addEventListener("contextmenu", (event) => {
@@ -40,7 +51,7 @@ const MemoryGame = (function () {
       let gameTitle = null;
       let [cols, rows, cardDivisor] = [4, 4, 5];
 
-      switch (gameLevel) {
+      switch (MemoryGame.gameLevel) {
         case Game.LEVEL_4_X_4:
           gameTitle = "4 × 4 Game";
           [cols, rows, cardDivisor] = [4, 4, 5];
@@ -73,33 +84,55 @@ const MemoryGame = (function () {
       r.style.setProperty("--card-divisior", cardDivisor);
 
       // change card color when level changes
-      setLevelColor(gameLevel);
+      MemoryGame.setLevelColor();
 
       // show animation during card click
-      if (showAnimation === true) {
+      if (MemoryGame.cardAnimation === true) {
         const gridItems = document.querySelectorAll(".grid-card");
         gridItems.forEach((item) => {
           item.classList.add("show-animation");
         });
       }
     },
+
+    setLevelColor: () => {
+      let r = document.querySelector(":root");
+
+      let cardColor = null;
+      let textColor = null;
+
+      switch (MemoryGame.gameLevel) {
+        case Game.LEVEL_4_X_4:
+          cardColor = "lightskyblue";
+          textColor = "steelblue";
+          break;
+        case Game.LEVEL_4_X_5:
+          cardColor = "lightseagreen";
+          textColor = "rgb(22, 154, 147)";
+          break;
+      }
+      // change the card color
+      r.style.setProperty("--card-color", cardColor);
+      r.style.setProperty("--status-text-color", textColor);
+    },
+
+    // Game Over
     gameOver: () => {
       // stop the timer
-      clearInterval(appTimer);
+      clearInterval(MemoryGame.appTimer);
 
       // show [You Won] modal dialog
       document.getElementById("popup-dlg").classList.add("showme");
     },
 
-    // Timer block of the JavaScript
+    /* 
+    This JS block handles displaying the timer on the screen in 0:00 (m:ss) format
+    timer block is called after every 1 second
+    */
     startTimer: () => {
-      /* 
-      This JS block handles displaying the timer on the screen in 0:00 (m:ss) format
-      this timer is called after every 1 second.
-      */
       let [seconds, minutes] = [0, 0];
 
-      appTimer = setInterval(() => {
+      MemoryGame.appTimer = setInterval(() => {
         seconds++;
         if (seconds === 60) {
           minutes++;
@@ -113,21 +146,18 @@ const MemoryGame = (function () {
   };
 })();
 
-// Start the Game
-MemoryGame.getGameLevel();
-MemoryGame.initGame();
-MemoryGame.startTimer();
+/* Start the MEMORY GAME */
+{
+  MemoryGame.cardAnimation = false;
+  MemoryGame.gameLevel = Game.LEVEL_4_X_4;
+  MemoryGame.initGame();
+  MemoryGame.startTimer();
+}
 
 (function () {
-  /* 
-  This is main code for memory game (4x4 and 4x5)
-  @Author: Siken Man Dongol
-  @Date  : April 20, 2023
-  */
-
   let [count, gameScore, gameMoves] = [0, 0, 0];
 
-  const pairs = getEmojis(gameLevel);
+  const pairs = getEmojis(MemoryGame.gameLevel);
   console.log(pairs);
 
   let [firstClick, secondClick] = [null, null];

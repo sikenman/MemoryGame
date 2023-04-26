@@ -23,8 +23,10 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Changing CSS variables through JavaScript.
 - Make use of export and import modules with JS files.
 - Implemented Module pattern in the game.
+  - Implemented getters and setters.
 - Implemented (Immediately Invoked Function Expressions).
 - Context menu on the right click is disabled (via JavaScript).
+- Make use of nullish coalescing operator or double question mark (??).
 
 ## CSS features used
 - CSS variables were used.
@@ -62,25 +64,13 @@ I have made this game using some of the useful and latest features of ECMAScript
 ```
 ### Sample JavaScript code used
 ```javascript
-export function setLevelColor(level) {
-  let r = document.querySelector(":root");
-
-  let cardColor = null;
-  let textColor = null;
-
+export function getEmojis(level) {
   switch (level) {
     case Game.LEVEL_4_X_4:
-      cardColor = "lightskyblue";
-      textColor = "steelblue";
-      break;
+      return getEmojis4x4();
     case Game.LEVEL_4_X_5:
-      cardColor = "lightseagreen";
-      textColor = "rgb(22, 154, 147)";
-      break;
+      return getEmojis4x5();
   }
-  // change the card color
-  r.style.setProperty("--card-color", cardColor);
-  r.style.setProperty("--status-text-color", textColor);
 }
 
 function getEmojis4x4() {

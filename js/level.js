@@ -18,27 +18,6 @@ export function getEmojis(level) {
   }
 }
 
-export function setLevelColor(level) {
-  let r = document.querySelector(":root");
-
-  let cardColor = null;
-  let textColor = null;
-
-  switch (level) {
-    case Game.LEVEL_4_X_4:
-      cardColor = "lightskyblue";
-      textColor = "steelblue";
-      break;
-    case Game.LEVEL_4_X_5:
-      cardColor = "lightseagreen";
-      textColor = "rgb(22, 154, 147)";
-      break;
-  }
-  // change the card color
-  r.style.setProperty("--card-color", cardColor);
-  r.style.setProperty("--status-text-color", textColor);
-}
-
 function getEmojis4x4() {
   const emoji44 = [
     ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🏀"],
