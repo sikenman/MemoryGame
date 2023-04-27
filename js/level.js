@@ -6,7 +6,7 @@ import { getRandom, shuffleArray, shuffleArrayUnique } from "./lib.js";
   after shuffling for given level
 
   @Author: Siken Man Dongol
-  @Date  : April 20 - 26, 2023
+  @Date  : April 20 - 27, 2023
 */
 
 export function getEmojis(level) {

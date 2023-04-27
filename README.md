@@ -24,6 +24,7 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Used Fisher–Yates shuffling algorithm.
   - [Fisher–Yates Shuffle](https://bost.ocks.org/mike/shuffle/)
 - Changing CSS variables through JavaScript.
+- Used template literal or a template string.
 - Make use of export and import modules with JS files.
 - Implemented Module pattern in the game.
   - Implemented getters and setters.

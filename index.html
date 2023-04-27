@@ -34,7 +34,7 @@
         </div>
         <div id="restart-block">
             <input type="checkbox" id="cb_mode_pictures">
-            <label for="cb_mode_pictures"> Celebs </label>
+            <label for="cb_mode_pictures"> Celebs&nbsp;</label>
             <button class="game-restart" onclick="App.startGame('4x4');">Game 4 &times; 4</button>
             <button class="game-restart" onclick="App.startGame('4x5');">Game 4 &times; 5</button>
         </div>
@@ -55,6 +55,9 @@
 
     <script type="module" src="./js/game.js"></script>
     <script>
+        const MODE_EMOJI = "mode_emoji";
+        const MODE_PICTURE = "mode_picture";
+
         // Start the Game
         const App = (function () {
             // private
@@ -89,13 +92,13 @@
         checkbox.addEventListener("click", toggleCelebMode);
 
         function toggleCelebMode() {
-            let gameMode = (checkbox.checked == true) ? "mode_picture" : "mode_emoji";
+            const gameMode = (checkbox.checked == true) ? MODE_PICTURE : MODE_EMOJI;
             // set the sessionStorage [gameMode]
             window.sessionStorage.setItem("gameMode", gameMode);
         }
 
         const gameMode = window.sessionStorage.getItem("gameMode");
-        if(gameMode==="mode_picture") {
+        if (gameMode === MODE_PICTURE) {
             checkbox.checked = true;
         }
     </script>

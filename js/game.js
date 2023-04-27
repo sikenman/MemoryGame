@@ -17,7 +17,7 @@ const MemoryGame = (function () {
 
   const about = "2D Memory Game Core";
   const author = "Siken M. Dongol";
-  const modified = "Apr 26, 2023";
+  const modified = "Apr 27, 2023";
 
   // public methods
   return {
