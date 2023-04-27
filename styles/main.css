@@ -1,7 +1,7 @@
 :root {
   --card-cols: 4;
   --card-rows: 5;
-  --card-divisior: 6.4;
+  --card-divisior: 6.6;
   --card-color: lightskyblue;
   --status-text-color: steelblue;
   --shadow-color: #999;
@@ -22,8 +22,8 @@ body {
 
 h1 {
   color: #22212c;
-  font-size: 3.4rem;
-  line-height: 3.8rem;
+  font-size: 3.2rem;
+  line-height: 3.2rem;
   text-align: center;
   text-shadow: 2px 2px 4px var(--shadow-color);
 }
@@ -49,8 +49,8 @@ h1 {
   }
   h1 {
     color: #22212c;
-    font-size: 3rem;
-    line-height: 3.4rem;
+    font-size: 2.8rem;
+    line-height: 2.8rem;
   }
 }
 
@@ -141,6 +141,10 @@ footer.status {
 /* hidden at load */
 #restart-block {
   display: none;
+}
+
+#restart-block label {
+  font-size: 1.5rem;
 }
 
 /* Reload Buttons */

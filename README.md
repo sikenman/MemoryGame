@@ -5,11 +5,12 @@ I have made this game using some of the useful and latest features of ECMAScript
 ## Features of MemoryGame
 - Classic memory game of levels 4 × 4 and 4 × 5.
   - Make use of a 2D array to load the games.
+  - User can toggle between celebs mode or emoji mode.
   - Once game is over, user can start either of the two possible games.
 - Two sets of emojis are available at each level.
   - Set of flags emojis.
   - Set of miscellaneous emojis.
-- One set of celebs pictures are available at each level.
+- Random celebs pictures are selected at each level from the picture library.
   - Loading of celebs images (300 x 300).
 - Random sets of emojis are selected at runtime.
 - Different color schemes for each game level.
@@ -29,7 +30,7 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Implemented (Immediately Invoked Function Expressions).
 - Context menu on the right click is disabled (via JavaScript).
 - Make use of nullish coalescing operator or double question mark (??).
-- Make use of (match) function to distinguish between emoji and pictures.
+- Make use of regex (match) function to distinguish between emoji and pictures.
 
 ## CSS features used
 - CSS variables were used.

@@ -33,6 +33,8 @@
             Matched: <span id="match">0</span> Moves: <span id="moves">0</span> Time: <span id="timer">0:00</span>
         </div>
         <div id="restart-block">
+            <input type="checkbox" id="cb_mode_pictures">
+            <label for="cb_mode_pictures"> Celebs </label>
             <button class="game-restart" onclick="App.startGame('4x4');">Game 4 &times; 4</button>
             <button class="game-restart" onclick="App.startGame('4x5');">Game 4 &times; 5</button>
         </div>
@@ -66,7 +68,7 @@
                 author,
                 modified,
                 startGame: (level) => {
-                    // set the localStorage [gameLevel]
+                    // set the sessionStorage [gameLevel]
                     window.sessionStorage.setItem("gameLevel", level);
                     location.reload(true);
                 },
@@ -80,6 +82,22 @@
         })();
         console.table([App.about, App.author]);
 
+        const checkbox = document.getElementById("cb_mode_pictures");
+        const label = document.querySelector("label[for=cb_mode_pictures]");
+
+        label.addEventListener("click", toggleCelebMode);
+        checkbox.addEventListener("click", toggleCelebMode);
+
+        function toggleCelebMode() {
+            let gameMode = (checkbox.checked == true) ? "mode_picture" : "mode_emoji";
+            // set the sessionStorage [gameMode]
+            window.sessionStorage.setItem("gameMode", gameMode);
+        }
+
+        const gameMode = window.sessionStorage.getItem("gameMode");
+        if(gameMode==="mode_picture") {
+            checkbox.checked = true;
+        }
     </script>
 </body>
 

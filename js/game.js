@@ -1,10 +1,10 @@
 import * as Game from "./const.js";
-import { getEmojis } from "./level.js";
+import { getEmojis, getPictures } from "./level.js";
 
 /* 
   This is main code for memory game (4x4 and 4x5)
   @Author: Siken Man Dongol
-  @Date  : April 20 - 26, 2023
+  @Date  : April 20 - 27, 2023
 */
 const MemoryGame = (function () {
   // private variables
@@ -36,7 +36,11 @@ const MemoryGame = (function () {
     },
 
     set gameMode(mode) {
-      _gameMode = mode ?? Game.MODE_EMOJI;
+      if (mode === true) {
+        let sessionMode = window.sessionStorage.getItem("gameMode");
+        // start the game with session game mode
+        _gameMode = sessionMode ?? Game.MODE_EMOJI;
+      }
     },
     get gameMode() {
       return _gameMode;
@@ -58,7 +62,12 @@ const MemoryGame = (function () {
 
     // game initialization
     initGame: () => {
-      console.table([MemoryGame.about, MemoryGame.gameLevel, MemoryGame.cardAnimation]);
+      console.table([
+        MemoryGame.about,
+        MemoryGame.gameMode,
+        MemoryGame.gameLevel,
+        "Animation: " + MemoryGame.cardAnimation,
+      ]);
 
       // disable right click
       document.addEventListener("contextmenu", (event) => {
@@ -66,16 +75,16 @@ const MemoryGame = (function () {
       });
 
       let gameTitle = null;
-      let [cols, rows, cardDivisor] = [4, 4, 5.6];
+      let [cols, rows, cardDivisor] = [4, 4, null];
 
       switch (MemoryGame.gameLevel) {
         case Game.LEVEL_4_X_4:
           gameTitle = "4 × 4 Game";
-          [cols, rows, cardDivisor] = [4, 4, 5.6];
+          [cols, rows, cardDivisor] = [4, 4, 6.6];
           break;
         case Game.LEVEL_4_X_5:
           gameTitle = "4 × 5 Game";
-          [cols, rows, cardDivisor] = [4, 5, 6.4];
+          [cols, rows, cardDivisor] = [4, 5, 6.6];
           break;
       }
 
@@ -171,15 +180,16 @@ const MemoryGame = (function () {
 
 /* Start the MEMORY GAME */
 {
+  MemoryGame.gameMode = true; // means read game mode from [window.sessionStorage]
   MemoryGame.cardAnimation = false;
   MemoryGame.gameLevel = Game.LEVEL_4_X_4;
-  MemoryGame.cardPairs = getEmojis(MemoryGame.gameLevel);
-  console.log(MemoryGame.cardPairs);
 
-  let checkEmoji = MemoryGame.cardPairs[0];
-  if (checkEmoji.match(/c\([1-9a]\)/)) {
-    MemoryGame.gameMode = Game.MODE_PICTURE;
+  if (MemoryGame.gameMode == Game.MODE_EMOJI) {
+    MemoryGame.cardPairs = getEmojis(MemoryGame.gameLevel);
+  } else {
+    MemoryGame.cardPairs = getPictures(MemoryGame.gameLevel);
   }
+  console.log(MemoryGame.cardPairs);
   MemoryGame.initGame();
   MemoryGame.startTimer();
 }
@@ -203,11 +213,12 @@ const MemoryGame = (function () {
     }
     //console.info(count, gameScore, gameMoves);
 
+    const picFilePattern = /[cde]\([0-9a-f]\)/;
     if (count === 0) {
       firstEmoji = MemoryGame.cardPairs[this.dataset.id];
 
-      // our images are saved as c(x).jpg, using regular expression to match it
-      if (firstEmoji.match(/c\([1-9a]\)/)) {
+      // our images are saved as c(x).jpg d(x).jpg and like, using regular expression to match it
+      if (firstEmoji.match(picFilePattern)) {
         e.target.innerHTML = `<img src="./celebs/${firstEmoji}.jpg" />`;
       } else {
         e.target.textContent = firstEmoji;
@@ -219,7 +230,7 @@ const MemoryGame = (function () {
     } else if (count === 1) {
       secondEmoji = MemoryGame.cardPairs[this.dataset.id];
 
-      if (secondEmoji.match(/c\([1-9a]\)/)) {
+      if (secondEmoji.match(picFilePattern)) {
         e.target.innerHTML = `<img src="./celebs/${secondEmoji}.jpg" />`;
       } else {
         e.target.textContent = secondEmoji;
@@ -253,7 +264,7 @@ const MemoryGame = (function () {
           firstClick = null;
           secondClick = null;
           count = 0;
-        }, 720);
+        }, 800);
         count++;
       }
     }

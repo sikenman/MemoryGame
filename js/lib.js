@@ -3,7 +3,7 @@
   [Fisher–Yates Shuffle](https://bost.ocks.org/mike/shuffle/)
 
   @Author: Siken Man Dongol
-  @Date  : April 20, 2023
+  @Date  : April 20-27, 2023
 */
 
 export function shuffleArray(array) {
@@ -22,6 +22,18 @@ export function shuffleArray(array) {
     }
   }
   return array;
+}
+
+/*
+  Returns shuffle Array of size n
+*/
+export function shuffleArrayUnique(array, n) {
+  if (n > array.length) {
+    console.error("n is greater than the size of the given array");
+    return null;
+  }
+  let tmpShuffled = shuffleArray(array);
+  return tmpShuffled.slice(0, n);
 }
 
 /*
