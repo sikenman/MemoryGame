@@ -48,7 +48,7 @@ function getEmojis4x5() {
 
 /*
   this function returns 8, 10 pairs of images from the library of pictures
-  currently we have library of 32+ pics
+  currently we have library of 40+ pics
   */
 
 export function getPictures(level) {
@@ -58,7 +58,7 @@ export function getPictures(level) {
   const pics = [
     "c(0),c(1),c(2),c(3),c(4),c(5),c(6),c(7),c(8),c(9),c(a),c(b),c(c),c(d),c(e),c(f)",
     "d(0),d(1),d(2),d(3),d(4),d(5),d(6),d(7),d(8),d(9),d(a),d(b),d(c),d(d),d(e),d(f)",
-    "e(0),e(1),e(2),e(3),e(4),e(5)",
+    "e(0),e(1),e(2),e(3),e(4),e(5),e(6),e(7),e(8),e(9),a(1)",
   ];
 
   // making array out of comma seperated string

@@ -213,13 +213,13 @@ const MemoryGame = (function () {
     }
     //console.info(count, gameScore, gameMoves);
 
-    const picFilePattern = /[cde]\([0-9a-f]\)/;
+    const picFilePattern = /[acde]\([0-9a-f]\)/;
     if (count === 0) {
       firstEmoji = MemoryGame.cardPairs[this.dataset.id];
 
       // our images are saved as c(x).jpg d(x).jpg and like, using regular expression to match it
       if (firstEmoji.match(picFilePattern)) {
-        e.target.innerHTML = `<img src="./celebs/${firstEmoji}.jpg" />`;
+        e.target.innerHTML = `<img class="pic300" src="./celebs/${firstEmoji}.jpg" />`;
       } else {
         e.target.textContent = firstEmoji;
       }
@@ -231,7 +231,7 @@ const MemoryGame = (function () {
       secondEmoji = MemoryGame.cardPairs[this.dataset.id];
 
       if (secondEmoji.match(picFilePattern)) {
-        e.target.innerHTML = `<img src="./celebs/${secondEmoji}.jpg" />`;
+        e.target.innerHTML = `<img class="pic300" src="./celebs/${secondEmoji}.jpg" />`;
       } else {
         e.target.textContent = secondEmoji;
       }

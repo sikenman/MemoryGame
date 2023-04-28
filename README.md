@@ -38,6 +38,7 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Selection of text is disabled (via CSS).
 - Used Media Queries Level 4.
 - Responsive grid design that adjusts to different screen sizes.
+  - Celebs pictures auto adjusts according to viewport.
   - CSS media queries for responsive design.
 
 ### Sample CSS code used
