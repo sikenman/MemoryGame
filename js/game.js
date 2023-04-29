@@ -4,20 +4,20 @@ import { getEmojis, getPictures } from "./level.js";
 /* 
   This is main code for memory game (4x4 and 4x5)
   @Author: Siken Man Dongol
-  @Date  : April 20 - 27, 2023
+  @Date  : April 20 - 28, 2023
 */
 const MemoryGame = (function () {
   // private variables
   let appTimer = null;
   let _gameLevel = null;
-  let _gameMode = Game.MODE_EMOJI;
+  let _gameMode = null;
 
   let _cardPairs = [];
   let _cardAnimation = false;
 
   const about = "2D Memory Game Core";
   const author = "Siken M. Dongol";
-  const modified = "Apr 27, 2023";
+  const modified = "Apr 28, 2023";
 
   // public methods
   return {
@@ -26,21 +26,18 @@ const MemoryGame = (function () {
     modified,
     appTimer,
     set gameLevel(level) {
-      let sessionLevel = window.sessionStorage.getItem("gameLevel");
-      // start the game at session level
-      // (if not found, start game at the level provided by the user)
-      _gameLevel = sessionLevel ?? level;
+      // start the game at the level saved in the localStorage
+      _gameLevel = level;
+      window.sessionStorage.setItem("gameLevel", level);
     },
     get gameLevel() {
       return _gameLevel;
     },
 
     set gameMode(mode) {
-      if (mode === true) {
-        let sessionMode = window.sessionStorage.getItem("gameMode");
-        // start the game with session game mode
-        _gameMode = sessionMode ?? Game.MODE_EMOJI;
-      }
+      // start the game with the game mode saved in the localStorage
+      _gameMode = mode;
+      window.sessionStorage.setItem("gameMode", mode);
     },
     get gameMode() {
       return _gameMode;
@@ -62,17 +59,13 @@ const MemoryGame = (function () {
 
     // game initialization
     initGame: () => {
-      console.table([
-        MemoryGame.about,
-        MemoryGame.gameMode,
-        MemoryGame.gameLevel,
-        "Animation: " + MemoryGame.cardAnimation,
-      ]);
-
-      // disable right click
-      document.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-      });
+      const memoryGameObj = {
+        about: MemoryGame.about,
+        mode: MemoryGame.gameMode,
+        level: MemoryGame.gameLevel,
+        animation: MemoryGame.cardAnimation,
+      };
+      console.table(memoryGameObj);
 
       let gameTitle = null;
       let [cols, rows, cardDivisor] = [4, 4, null];
@@ -180,9 +173,19 @@ const MemoryGame = (function () {
 
 /* Start the MEMORY GAME */
 {
-  MemoryGame.gameMode = true; // means read game mode from [window.sessionStorage]
   MemoryGame.cardAnimation = false;
-  MemoryGame.gameLevel = Game.LEVEL_4_X_4;
+
+  let gameState = JSON.parse(localStorage.getItem("MemoryGame"));
+  if (gameState !== null) {
+    // The object exists in localStorage
+    console.log("From LocalStorage");
+    console.log(gameState);
+    MemoryGame.gameMode = gameState.mode;
+    MemoryGame.gameLevel = gameState.level;
+  } else {
+    MemoryGame.gameMode = Game.MODE_EMOJI;
+    MemoryGame.gameLevel = Game.LEVEL_4_X_4;
+  }
 
   if (MemoryGame.gameMode == Game.MODE_EMOJI) {
     MemoryGame.cardPairs = getEmojis(MemoryGame.gameLevel);

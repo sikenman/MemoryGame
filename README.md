@@ -17,7 +17,8 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Animation of cards when clicking on them.
   - CSS animation toggle based on **_showAnimation_** boolean variable.
 - The game over modal dialog box is shown when the user completes the game.
-- The game level saved using **_window.sessionStorage_**.
+- The game level saved using **_window.sessionStorage_** and **_window.localStorage_**.
+  - The game level and game mode is saved when used closes the tab.
 - Emoji (🌍) is used as favicon.
 
 ## JavaScript features used
@@ -32,6 +33,7 @@ I have made this game using some of the useful and latest features of ECMAScript
 - Context menu on the right click is disabled (via JavaScript).
 - Make use of nullish coalescing operator or double question mark (??).
 - Make use of regex (match) function to distinguish between emoji and pictures.
+- Used window.sessionStorage and window.localStorage.
 
 ## CSS features used
 - CSS variables were used.

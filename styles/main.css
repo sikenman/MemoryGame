@@ -198,7 +198,7 @@ button.game-restart {
   margin-top: 0;
   color: #333;
   color: var(--status-text-color);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 .popup .close {
   position: absolute;

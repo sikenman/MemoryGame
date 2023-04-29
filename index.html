@@ -55,15 +55,33 @@
 
     <script type="module" src="./js/game.js"></script>
     <script>
+        const GAME_MODE = "gameMode";
+        const GAME_LEVEL = "gameLevel";
         const MODE_EMOJI = "mode_emoji";
         const MODE_PICTURE = "mode_picture";
+
+        // disable right click
+        document.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+
+        // restore checkbox state when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            const gameMode = window.sessionStorage.getItem(GAME_MODE);
+            if (gameMode === MODE_PICTURE) {
+                checkbox.checked = true;
+            } else {
+                checkbox.checked = false;
+            }
+            console.log('checkbox value restored -> ' + checkbox.checked);
+        });
 
         // Start the Game
         const App = (function () {
             // private
             const about = "2D Memory Game App";
             const author = "Siken M. Dongol";
-            const modified = "Apr 25, 2023";
+            const modified = "Apr 28, 2023";
 
             // public
             return {
@@ -72,7 +90,7 @@
                 modified,
                 startGame: (level) => {
                     // set the sessionStorage [gameLevel]
-                    window.sessionStorage.setItem("gameLevel", level);
+                    window.sessionStorage.setItem(GAME_LEVEL, level);
                     location.reload(true);
                 },
                 closeDialog: () => {
@@ -94,13 +112,21 @@
         function toggleCelebMode() {
             const gameMode = (checkbox.checked == true) ? MODE_PICTURE : MODE_EMOJI;
             // set the sessionStorage [gameMode]
-            window.sessionStorage.setItem("gameMode", gameMode);
+            window.sessionStorage.setItem(GAME_MODE, gameMode);
         }
 
-        const gameMode = window.sessionStorage.getItem("gameMode");
-        if (gameMode === MODE_PICTURE) {
-            checkbox.checked = true;
-        }
+        // saving current state of the game when tab is closed
+        window.addEventListener('beforeunload', function () {
+            const gameMode = window.sessionStorage.getItem(GAME_MODE);
+            const gameLevel = window.sessionStorage.getItem(GAME_LEVEL);
+            const gameState = {
+                mode: gameMode ?? MODE_EMOJI,
+                level: gameLevel ?? "4x4",
+            };
+
+            localStorage.setItem("MemoryGame", JSON.stringify(gameState));
+        });
+
     </script>
 </body>
 
