@@ -6,7 +6,7 @@ import { getRandom, shuffleArray, shuffleArrayUnique } from "./lib.js";
   after shuffling for given level
 
   @Author: Siken Man Dongol
-  @Date  : April 20 - 27, 2023
+  @Date  : April 20 - 30, 2023
 */
 
 export function getEmojis(level) {
@@ -20,7 +20,7 @@ export function getEmojis(level) {
 
 function getEmojis4x4() {
   const emoji44 = [
-    ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🏀"],
+    ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🎁"],
     ["🇱🇰", "🇫🇷", "🇨🇳", "🇳🇵", "🇰🇷", "🇺🇸", "🇧🇷", "🇵🇰"],
   ];
 
@@ -34,7 +34,7 @@ function getEmojis4x4() {
 
 function getEmojis4x5() {
   const emoji45 = [
-    ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🏀", "⭐", "❤️"],
+    ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🎁", "⭐", "❤️"],
     ["🇱🇰", "🇫🇷", "🇨🇳", "🇳🇵", "🇰🇷", "🇺🇸", "🇧🇷", "🇵🇰", "🇮🇳", "🇵🇹"],
   ];
 

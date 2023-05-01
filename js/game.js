@@ -4,7 +4,7 @@ import { getEmojis, getPictures } from "./level.js";
 /* 
   This is main code for memory game (4x4 and 4x5)
   @Author: Siken Man Dongol
-  @Date  : April 20 - 28, 2023
+  @Date  : April 20 - 30, 2023
 */
 const MemoryGame = (function () {
   // private variables
@@ -15,7 +15,7 @@ const MemoryGame = (function () {
   let _cardPairs = [];
   let _cardAnimation = false;
 
-  const about = "2D Memory Game Core";
+  const about = "Memory Game Core";
   const author = "Siken M. Dongol";
   const modified = "Apr 28, 2023";
 
@@ -73,17 +73,18 @@ const MemoryGame = (function () {
       switch (MemoryGame.gameLevel) {
         case Game.LEVEL_4_X_4:
           gameTitle = "4 × 4 Game";
-          [cols, rows, cardDivisor] = [4, 4, 6.6];
+          [cols, rows, cardDivisor] = [4, 4, 5.6];
           break;
         case Game.LEVEL_4_X_5:
           gameTitle = "4 × 5 Game";
-          [cols, rows, cardDivisor] = [4, 5, 6.6];
+          [cols, rows, cardDivisor] = [4, 5, 6.5];
           break;
       }
 
       // change the game title and heading (h1)
-      document.title = "Memory " + gameTitle;
-      document.getElementById("game-level").innerHTML = "Memory " + gameTitle;
+      const gameFullTitle = `${Game.APP_NAME} ${gameTitle}`;
+      document.title = gameFullTitle;
+      document.getElementById("game-level").innerHTML = gameFullTitle;
 
       // we already have 8 divs in HTML page
       // we dynamically generate remaining divs for game 4x4, 4x5
@@ -175,7 +176,7 @@ const MemoryGame = (function () {
 {
   MemoryGame.cardAnimation = false;
 
-  let gameState = JSON.parse(localStorage.getItem("MemoryGame"));
+  let gameState = JSON.parse(localStorage.getItem(Game.APP_NAME));
   if (gameState !== null) {
     // The object exists in localStorage
     console.log("From LocalStorage");
@@ -214,7 +215,6 @@ const MemoryGame = (function () {
     if (gameMoves % 2 == 0) {
       document.getElementById("moves").innerHTML = Number(gameMoves / 2);
     }
-    //console.info(count, gameScore, gameMoves);
 
     const picFilePattern = /[acde]\([0-9a-f]\)/;
     if (count === 0) {
@@ -226,7 +226,7 @@ const MemoryGame = (function () {
       } else {
         e.target.textContent = firstEmoji;
       }
-      //----
+
       firstClick = this;
       firstClick.classList.add("clicked");
       count++;
@@ -238,7 +238,7 @@ const MemoryGame = (function () {
       } else {
         e.target.textContent = secondEmoji;
       }
-      //----
+      
       secondClick = this;
       secondClick.classList.add("clicked");
 

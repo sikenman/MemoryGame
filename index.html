@@ -55,6 +55,8 @@
 
     <script type="module" src="./js/game.js"></script>
     <script>
+        const APP_NAME = "MemoryGame";
+
         const GAME_MODE = "gameMode";
         const GAME_LEVEL = "gameLevel";
         const MODE_EMOJI = "mode_emoji";
@@ -79,7 +81,7 @@
         // Start the Game
         const App = (function () {
             // private
-            const about = "2D Memory Game App";
+            const about = "MemoryGame App";
             const author = "Siken M. Dongol";
             const modified = "Apr 28, 2023";
 
@@ -124,7 +126,7 @@
                 level: gameLevel ?? "4x4",
             };
 
-            localStorage.setItem("MemoryGame", JSON.stringify(gameState));
+            localStorage.setItem(APP_NAME, JSON.stringify(gameState));
         });
 
     </script>

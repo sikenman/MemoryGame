@@ -47,8 +47,13 @@ I have made this game using some of the useful and latest features of ECMAScript
 ```css
 @media (width > 1439px) {
   .grid-container {
-    margin-left: 24%;
-    margin-right: 24%;
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+
+  .grid-card img.pic300 {
+    width: auto;
+    height: 99%;
   }
 }
 
@@ -83,7 +88,7 @@ export function getEmojis(level) {
 
 function getEmojis4x4() {
   const emoji44 = [
-    ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🏀"],
+    ["🐶", "😎", "🐼", "🌻", "🌍", "👻", "🚀", "🎁"],
     ["🇱🇰", "🇫🇷", "🇨🇳", "🇳🇵", "🇰🇷", "🇺🇸", "🇧🇷", "🇵🇰"],
   ];
 

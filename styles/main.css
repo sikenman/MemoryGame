@@ -20,6 +20,8 @@ body {
 }
 
 h1 {
+  margin: 0.5rem;
+  margin-bottom: 1.2rem;
   color: #22212c;
   font-size: 3.2rem;
   line-height: 3.2rem;
@@ -30,23 +32,23 @@ h1 {
 .grid-container {
   margin-top: 0;
   /* following margin left/right will be applied if
-  viewport width is between (980 px and 1439px) */
-  margin-left: 10%;
-  margin-right: 10%;
+  viewport width is between (768px and 1439px) */
+  margin-left: 12%;
+  margin-right: 12%;
 
   display: grid;
   grid-template-columns: repeat(var(--card-cols), 1fr);
   grid-template-rows: repeat(var(--card-rows), 1fr);
-  gap: 0.5rem;
+  gap: 0.4rem;
   border: 0px dotted silver;
 }
 
 .grid-card {
   cursor: pointer;
   font-size: 5.3rem;
-  border-radius: 1rem;
-  min-width: 8rem;
-  min-height: 8rem;
+  border-radius: 0.8rem;
+  min-width: 126px;
+  min-height: 120px;
   background-color: #ddd;
   border: 2px solid #d6d6d6;
   height: calc(100vh / var(--card-divisior));
@@ -60,12 +62,12 @@ h1 {
 
 .grid-card img.pic300 {
   width: auto;
-  height: 98%;
+  height: 99%;
   overflow: hidden;
-  border-radius: 0.86rem;
+  border-radius: 0.72rem;
 }
 
-@media (width < 980px) {
+@media (width < 768px) {
   .grid-container {
     margin-left: 4%;
     margin-right: 4%;
@@ -74,23 +76,25 @@ h1 {
     color: #22212c;
     font-size: 2.8rem;
     line-height: 2.8rem;
+    margin: 0.4rem;
+    margin-bottom: 1rem;
   }
 
   .grid-card img.pic300 {
-    width: 99%;
+    width: auto;
     height: auto;
   }
 }
 
 @media (width > 1439px) {
   .grid-container {
-    margin-left: 24%;
-    margin-right: 24%;
+    margin-left: 25%;
+    margin-right: 25%;
   }
 
   .grid-card img.pic300 {
     width: auto;
-    height: 98%;
+    height: 99%;
   }
 }
 
@@ -161,8 +165,8 @@ footer.status {
 /* Reload Buttons */
 button.game-restart {
   font-size: 1.4rem;
-  width: 14rem;
-  height: 3.6rem;
+  width: 13rem;
+  height: 3.2rem;
   padding: 0.3rem;
   border-radius: 0.5em;
   cursor: pointer;
